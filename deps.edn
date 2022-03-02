@@ -1,0 +1,7 @@
+{:paths ["src", "resources"]
+ :deps  {com.walmartlabs/lacinia {:mvn/version "0.38.0"}
+         metosin/reitit          {:mvn/version "0.5.16"}
+         org.clojure/clojure     {:mvn/version "1.10.3"}
+         org.clojure/data.json   {:mvn/version "2.4.0"}
+         ring/ring               {:mvn/version "1.9.5"}
+         ring/ring-jetty-adapter {:mvn/version "1.7.1"}}}
