@@ -5,6 +5,7 @@
             [reitit.ring :as ring]
             [ring.adapter.jetty :as jetty]
             [ring.middleware.reload :refer [wrap-reload]]
+            [ring.middleware.resource :as resource]
             [ring.util.request :refer [body-string]]))
 
 (def schema (schema/load-schema))
@@ -15,20 +16,15 @@
                                       (json/read-str :key-fn keyword))
         result (execute schema query variables nil)]
     {:status 200
+     :headers {"Content-Type" "application/json"}
      :body (json/write-str result)}))
-
-(defn wrap-content-type
-  [handler content-type]
-  (fn [request]
-    (let [response (handler request)]
-      (assoc-in response [:headers "Content-Type"] content-type))))
 
 (def reloadable-app
   (-> (ring/ring-handler
         (ring/router
           ["/graphql"
            {:post {:handler graphql-handler}}]))
-      (wrap-content-type "application/json")
+      (resource/wrap-resource "static")
       wrap-reload))
 
 (defn -main []
