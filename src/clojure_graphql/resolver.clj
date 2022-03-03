@@ -41,7 +41,7 @@
                        (filter #(= id (:game_id %)))
                        (map :rating))
           n (count ratings)]
-      {:count n
+      {:count   n
        :average (if (zero? n)
                   0
                   (/ (apply + ratings)
@@ -66,10 +66,10 @@
         games-map (entity-map data :games)
         members-map (entity-map data :members)
         designers-map (entity-map data :designers)]
-    {:query/game-by-id (partial resolve-game-by-id games-map)
-     :query/member-by-id (partial resolve-element-by-id members-map)
-     :BoardGame/designers (partial resolve-board-game-designers designers-map)
+    {:query/game-by-id         (partial resolve-game-by-id games-map)
+     :query/member-by-id       (partial resolve-element-by-id members-map)
+     :BoardGame/designers      (partial resolve-board-game-designers designers-map)
      :BoardGame/rating-summary (rating-summary data)
-     :GameRating/game (game-rating->game games-map)
-     :Designer/games (partial resolve-designer-games games-map)
-     :Member/ratings (member-ratings (:ratings data))}))
+     :GameRating/game          (game-rating->game games-map)
+     :Designer/games           (partial resolve-designer-games games-map)
+     :Member/ratings           (member-ratings (:ratings data))}))
